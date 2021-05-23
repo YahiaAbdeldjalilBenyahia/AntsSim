@@ -1,0 +1,70 @@
+public static int frameWidth = 1500, frameHeight = 800;
+    static double[] x, y; // x,y positions
+    static double[] xvel, yvel; // x,y velocities
+    static int antCount = 10000;
+    static double houseX = frameWidth - 200, houseY = frameHeight - 200;
+    Circle[] ants = new Circle[antCount];
+    static double speed = 2; 
+    static int[] chosen = new int[antCount / 2];
+    static double randomizer = 1000;//this guy is gonna be the randomizer after each queue (in millis)
+
+    @Override
+    public void start(Stage primaryStage) {
+        Group root = new Group();
+        x = new double[antCount];
+        y = new double[antCount];
+        xvel = new double[antCount];
+        yvel = new double[antCount];
+        for (int i = 0; i < antCount; i++) {
+
+            x[i] = houseX;// initially they will all get out of the colony
+            y[i] = houseY;
+            xvel[i] = -1 + Math.random() * 2;
+            yvel[i] = -1 + Math.random() * 2;
+            ants[i] = new Circle(0, 0, 2, Color.WHITE);
+            ants[i].setTranslateX(x[i]);
+            ants[i].setTranslateY(y[i]);
+            root.getChildren().add(ants[i]);
+        }
+        //LOOK CAREFULLY:
+        //the reason why I made 2 PauseTransitions is that one is responsible for 
+        //updating the positions of the graphics and the other is for randomization process
+        PauseTransition drawer = new PauseTransition(Duration.millis(0.1));
+        drawer.setOnFinished(e -> {
+            // making borders and updating the position of each ant
+            for (int i = 0; i < antCount; i++) {
+                if (x[i] < 0 || x[i] > frameWidth) {
+                    xvel[i] = -xvel[i];
+                }
+                if (y[i] < 0 || y[i] > frameHeight) {
+                    yvel[i] = -yvel[i];
+                }
+                x[i] += xvel[i] * speed;
+                y[i] += yvel[i] * speed;
+                ants[i].setTranslateX(x[i]);
+                ants[i].setTranslateY(y[i]);
+            }
+            drawer.playFromStart();
+        });
+        drawer.play();
+        PauseTransition random = new PauseTransition(Duration.millis(randomizer));
+        random.setOnFinished(e -> {
+            Randomize();
+            random.playFromStart();
+        });
+        random.play();
+        Scene scene = new Scene(root, frameWidth, frameHeight, Color.BLACK);
+        primaryStage.setTitle("Ants!");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    static void Randomize() {
+        for (int i = 0; i < chosen.length; i++) {
+            chosen[i] = (int) (Math.random() * antCount);
+            xvel[chosen[i]] = ((xvel[chosen[i]] - 0.2) + Math.random() * (xvel[chosen[i]] + .2)) % 1;
+            yvel[chosen[i]] = ((yvel[chosen[i]] - 0.2) + Math.random() * (yvel[chosen[i]] + .2)) % 1;
+        }
+        //setup randomizer for the; next hit
+        randomizer = 100 + Math.random() * 2000;
+    }
