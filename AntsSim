@@ -36,8 +36,7 @@ public class AntsSim extends Application {
     static int antCount = 10000;
     static double houseX = frameWidth - 200, houseY = frameHeight - 200;
     Circle[] ants = new Circle[antCount];
-    static double speed = 2;
-    List<Line> lines = new ArrayList<>();
+    static double speed = 2; 
     static int[] chosen = new int[antCount / 2];
     static double randomizer = 1000;//this guy is gonna be the randomizer after each queue (in millis)
 
