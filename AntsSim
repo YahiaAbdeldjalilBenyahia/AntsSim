@@ -33,7 +33,7 @@ public class AntsSim extends Application {
     public static int frameWidth = 1500, frameHeight = 800;
     static double[] x, y; // x,y positions
     static double[] xvel, yvel; // x,y velocities
-    static int antCount = 10000;
+    static int antCount = 100000;
     static double houseX = frameWidth - 200, houseY = frameHeight - 200;
     Circle[] ants = new Circle[antCount];
     static double speed = 2; 
