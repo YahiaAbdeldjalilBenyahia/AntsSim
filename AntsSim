@@ -1,10 +1,43 @@
-public static int frameWidth = 1500, frameHeight = 800;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package antssim;
+
+import java.util.ArrayList;
+import java.util.List;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+/**
+ *
+ * @author user
+ */
+public class AntsSim extends Application {
+
+    public static int frameWidth = 1500, frameHeight = 800;
     static double[] x, y; // x,y positions
     static double[] xvel, yvel; // x,y velocities
     static int antCount = 10000;
     static double houseX = frameWidth - 200, houseY = frameHeight - 200;
     Circle[] ants = new Circle[antCount];
-    static double speed = 2; 
+    static double speed = 2;
+    List<Line> lines = new ArrayList<>();
     static int[] chosen = new int[antCount / 2];
     static double randomizer = 1000;//this guy is gonna be the randomizer after each queue (in millis)
 
@@ -68,3 +101,13 @@ public static int frameWidth = 1500, frameHeight = 800;
         //setup randomizer for the; next hit
         randomizer = 100 + Math.random() * 2000;
     }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+}
+
